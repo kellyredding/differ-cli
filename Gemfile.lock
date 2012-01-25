@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    differ-cli (0.0.1)
+    differ-cli (1.0.0)
       differ
       quickl
 

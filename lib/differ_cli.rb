@@ -34,11 +34,11 @@ module DifferCLI
         raise Quickl::Exit, "#{Quickl.program_name} #{VERSION}"
       end
 
-      opt.on('--method METHOD', 'the diff method: line (default), word, or char') do |method|
+      opt.on('--method METHOD', 'the diff method: line, word, or char (default)') do |method|
         @differ_cli_opts[:method] = method
       end
 
-      opt.on('--format FORMAT', 'the output format: ascii (default), color, or html') do |method|
+      opt.on('--format FORMAT', 'the output format: ascii, color (default), or html') do |method|
         @differ_cli_opts[:format] = method
       end
 
@@ -81,8 +81,8 @@ module DifferCLI
 
       @left  = args.first
       @right = args.last
-      self.diff_method = opts[:method] || 'line'
-      self.format_as = opts[:format] || 'ascii'
+      self.diff_method = opts[:method] || 'char'
+      self.format_as = opts[:format] || 'color'
     end
 
     def diff_method=(value)

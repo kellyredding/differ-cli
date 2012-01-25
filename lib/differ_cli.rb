@@ -38,7 +38,7 @@ module DifferCLI
         @differ_cli_opts[:method] = method
       end
 
-      opt.on('--format FORMAT', 'the output format: ascii, color (default), or html') do |method|
+      opt.on('--format FORMAT', 'the output format: ascii, color (default), html, or bcat') do |method|
         @differ_cli_opts[:format] = method
       end
 
@@ -54,6 +54,10 @@ module DifferCLI
         @differ_cli_opts[:format] = 'html'
       end
 
+      opt.on('-b', '--bcat', 'format output for piping to bcat (html-escaped w/ color)') do
+        @differ_cli_opts[:format] = 'bcat'
+      end
+
     end
 
     # Run the command
@@ -66,9 +70,10 @@ module DifferCLI
   class Base
 
     METHODS = ['line', 'word', 'char']
-    FORMATS = ['ascii', 'color', 'html']
+    FORMATS = ['ascii', 'color', 'html', 'bcat']
 
     attr_accessor :left, :right, :diff_method, :boundary_string
+    attr_accessor :diff
 
     def initialize(*params)
       opts, args = [
@@ -83,6 +88,7 @@ module DifferCLI
       @right = args.last
       self.diff_method = opts[:method] || 'char'
       self.format_as = opts[:format] || 'color'
+      @diff = ::Differ.send("diff_by_#{@diff_method}", *[@left, @right])
     end
 
     def diff_method=(value)
@@ -96,8 +102,33 @@ module DifferCLI
     end
 
     def diff
-      ::Differ.send("diff_by_#{@diff_method}", *[@left, @right]).format_as(@format_as.to_sym)
+      case @format_as
+      when 'bcat'
+        # format as color and escape for html output
+        escape_html(@diff.format_as(:color))
+      else
+       @diff.format_as(@format_as.to_sym)
+     end
     end
+
+    private
+
+    # Ripped from Rack v1.3.0 ======================================
+    # => ripped b/c I don't want a dependency on Rack for just this
+    ESCAPE_HTML = {
+      "&" => "&amp;",
+      "<" => "&lt;",
+      ">" => "&gt;",
+      "'" => "&#x27;",
+      '"' => "&quot;",
+      "/" => "&#x2F;"
+    }
+    ESCAPE_HTML_PATTERN = Regexp.union(*ESCAPE_HTML.keys)
+    # Escape ampersands, brackets and quotes to their HTML/XML entities.
+    def escape_html(string)
+      string.to_s.gsub(ESCAPE_HTML_PATTERN){|c| ESCAPE_HTML[c] }
+    end
+    # end Rip from Rack v1.3.0 =====================================
 
   end
 

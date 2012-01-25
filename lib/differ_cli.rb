@@ -38,7 +38,7 @@ module DifferCLI
         @differ_cli_opts[:method] = method
       end
 
-      opt.on('--format FORMAT', 'the output format: ascii, color (default), html, or bcat') do |method|
+      opt.on('--format FORMAT', 'the output format: ascii, color (default), html, or esc') do |method|
         @differ_cli_opts[:format] = method
       end
 
@@ -54,7 +54,7 @@ module DifferCLI
         @differ_cli_opts[:format] = 'html'
       end
 
-      opt.on('-b', '--bcat', 'format output for piping to bcat (html-escaped w/ color)') do
+      opt.on('-e', '--esc', 'format output as html-escaped w/ color') do
         @differ_cli_opts[:format] = 'bcat'
       end
 
@@ -62,7 +62,10 @@ module DifferCLI
 
     # Run the command
     def execute(args)
+      puts
+      puts '----------------'
       puts Base.new(*(args+[@differ_cli_opts || {}])).diff
+      puts '----------------'
     end
 
   end
@@ -103,7 +106,7 @@ module DifferCLI
 
     def diff
       case @format_as
-      when 'bcat'
+      when 'esc'
         # format as color and escape for html output
         escape_html(@diff.format_as(:color))
       else

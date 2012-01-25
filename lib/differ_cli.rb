@@ -81,8 +81,8 @@ module DifferCLI
 
       @left  = args.first
       @right = args.last
-      @diff_method = opts[:method] || 'line'
-      @format_as = opts[:format] || 'ascii'
+      self.diff_method = opts[:method] || 'line'
+      self.format_as = opts[:format] || 'ascii'
     end
 
     def diff_method=(value)

@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
 
 require 'differ-cli'
-
 DifferCLI::Differ.run(ARGV, __FILE__)

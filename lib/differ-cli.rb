@@ -1,0 +1,1 @@
+require 'differ_cli'

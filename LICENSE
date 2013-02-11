@@ -1,29 +1,3 @@
-= DifferCli
-
-== Description
-
-This is just a trivial CLI wrapper to the Differ API.  I wrote it
-for me, tailored to my needs.
-
-== Installation
-
-This is a ruby gem but I'm not pushing it to rubygems.org b/c it is
-so customized for what I need.  To install, just clone the repo and
-run 'rake install'
-
-    $ git clone
-    $ rake install
-
-== Usage
-
-When the gem installs, it installs a bin called 'differ'.  Use --help
-to see some available options.  Have fun.
-
-    $ differ --help
-    $ differ "something change" "something changed here"
-
-== License
-
 Copyright (c) 2012-Present Kelly D. Redding
 
 Permission is hereby granted, free of charge, to any person

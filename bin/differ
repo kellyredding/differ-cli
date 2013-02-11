@@ -1,4 +1,4 @@
 #!/usr/bin/env ruby
 
 require 'differ-cli'
-DifferCLI::CLI.new.run(ARGV)
+DifferCLI.new.run(ARGV)

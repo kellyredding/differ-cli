@@ -1,3 +1,3 @@
-module DifferCLI
+class DifferCLI
   VERSION = "1.0.1"
 end

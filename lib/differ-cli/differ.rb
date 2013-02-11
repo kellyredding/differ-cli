@@ -1,6 +1,6 @@
 require 'differ'
 
-module DifferCLI
+class DifferCLI
 
   DifferError = Class.new(RuntimeError)
 

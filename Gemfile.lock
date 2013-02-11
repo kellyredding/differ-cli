@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    differ-cli (1.0.0)
+    differ-cli (1.0.1)
       differ
 
 GEM
